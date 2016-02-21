@@ -66,7 +66,7 @@ def sigmoid(z):
 def gradient(theta, X, y):
     m = X.shape[0]
     h = sigmoid(X.dot(theta.T)).reshape(m, 1)
-    errors = (h - y).reshape(m, 1)
+    errors = 1.0/m * (h - y).reshape(m, 1)
     g = X.T.dot(errors)
     return np.ndarray.flatten(g)
 
@@ -74,8 +74,8 @@ def gradient(theta, X, y):
 def cost_regression(theta, X, y):
     m = X.shape[0]
     h = sigmoid(X.dot(theta.T)).reshape(m, 1)
-    errors = (h - y).reshape(m, 1)
-    J = 0.5 * (np.power(errors, 2)).sum()
+    J = 1.0/m * -(y.T.dot(np.log(h)) + (1 - y.T).dot(np.log(1 - h))).sum()
+    # print(J)
     return J
 
 
